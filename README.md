@@ -1,5 +1,6 @@
 # SAPUI5 - EXPERIMENTS	
 
 testing: 
-	* tiles - tooltips 
-	* timelines  -- 
+	
+	1. tiles - tooltips 
+	2. timelines  -- 
