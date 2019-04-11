@@ -1,0 +1,237 @@
+<!--
+
+https://timeline.knightlab.com/docs/json-format.html#json-text
+
+The TimelineJS JSON format consists of a single JSON object with the following properties:
+Name		Required?	Notes
+events		Yes			A JSON list of "slide" objects (see below)
+title		No			A "slide" object (see below)
+eras		No			A JSON list of "era" objects (see below)
+scale		No			Either human or cosmological. If no scale is specified, the default is human. The cosmological scale is required to handle dates in the very distant past or future. (Before Tuesday, April 20th, 271,821 BCE after Saturday, September 13 275,760 CE) For the cosmological scale, only the year is considered, but it's OK to have a cosmological timeline with years between 271,821 BCE and 275,760 CE.
+
+Slide objects are JSON objects with the following properties:
+Name		 Required?						Notes
+start_date	 Yes, except for title slides	A "date" object (see below)
+end_date	 No								A "date" object (see below)
+text		 No, but recommended			A "text" object (see below)
+media		 No								A "media" object (see below)
+group		 No								Any text. If present, Timeline will organize events with the same value for group to be in the same row or adjacent rows, separate from events in other groups. The common value for the group will be shown as a label at the left edge of the navigation.
+display_date No								A string which will be used when Timeline displays the date for this. If used, override's display_date values set on the start or end date for this event, which is useful if you want to control how the two dates relate to each other.
+background	 No								A Javascript object. The object can have these properties: 
+												url: the fully-qualified URL pointing to an image which will be used as the background 
+												color: a CSS color, in hexadecimal (e.g. #0f9bd1) or a valid CSS color keyword.
+autolink	 No								A boolean value (true or false). Defaults to true, which means that Timeline will scan text fields and automatically add <a> tags so that links and email addresses are "clickable." If set to false, you may still manually apply the tags in the appropriate fields when you want links. Autolinking applies to the text field in a text object and the caption and credit fields in a media object.
+unique_id	 No								A string value which is unique among all slides in your timeline. If not specified, TimelineJS will construct an ID based on the headline, but if you later edit your headline, the ID will change. Unique IDs are used when the hash_bookmark option is used, and can also be used with the timeline.goToId() method to programmatically move the timeline to a specific slide.
+
+Era objects are JSON objects which are used to label a span of time on the timeline navigation component. In structure, they are essentially very restricted "slide" objects.
+Name		Required?			Notes
+start_date	Yes					A "date" object (see below)
+end_date	Yes					A "date" object (see below)
+text		No, but recommended	A "text" object (see below)
+
+Date objects are JSON objects with the following properties:
+Name		 Required?			Notes
+year	 	 Yes				A number. Don't use commas. BCE years should be negative numbers. Don't use the letters "BC", "BCE" or any others.
+month		 No					A number from 1-12 (Javascript experts don't outsmart yourselves: Timeline corrects for Javascript's strange use of "0" for "January", etc.)
+day			 No					A number
+hour		 No					A number from 0-23
+minute		 No					A number from 0-59
+second		 No					A number from 0-59
+millisecond  No					A number
+display_date No					A string for presenting the date. Useful if Timeline's date formatting doesn't fit your needs.
+
+Text objects are JSON objects with the following properties. For each slide, text objects are optional.
+Name		Required?			Notes
+headline	No					Any text. HTML markup is OK. Blank is also OK.
+text		No					Any text. HTML markup is OK. Blank is OK. Not used for era objects.
+
+
+Media objects are JSON objects with the following properties. For each slide, media objects are optional.
+Name		Required?	Notes	
+url			Yes			In most cases, a URL (see media type documentation for complete details).
+caption		No			Any text. HTML markup is OK.
+credit		No			Any text. HTML markup is OK.
+thumbnail	No			A URL for an image to use in the timenav marker for this event. If omitted, Timeline will use an icon based on the type of media. Not relevant for title slides, because they do not have a marker.
+alt			No			An alt tag for your image. If none is provided, the caption, if any, will be used.
+title		No			A title for your image. If none is provided, the caption, if any, will be used.
+link		No			Optional URL to use as the href for wrapping the media with an <a> tag.
+link_target	No			Optional target to be associated with link if used.
+-->
+
+<!--				timeline options	
+Name				Defaultvalue							Notes
+debug				false									If true, copious console logging will be enabled.
+height				this._el.container.offsetHeight			The height of the timeline.
+width				this._el.container.offsetWidth			The width of the timeline.
+is_embed			false									If true, the class tl-timeline-embed is added to the outer Timeline container. Typically only used to support Timeline iframe embeds.
+hash_bookmark		false									If set to true, TimelineJS will update the browser URL each time a slide advances, so that people can link directly to specific slides.
+default_bg_color	white									RGB values to use for slide backgrounds. Specify as hex code, CSS named color, or a Javascript object with r, g, and b properties from 0-255.
+scale_factor		2										How many screen widths wide the timeline should be at first presentation.
+initial_zoom												The position in the zoom_sequence series used to scale the Timeline when it is first created. Takes precedence over scale_factor.
+zoom_sequence	[0.5, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]	Array of values for TimeNav zoom levels. Each value is a scale_factor, which means that at any given level, the full timeline would require that many screens to display all events.
+timenav_position	"bottom"								Display the timeline nav on the top or bottom.
+optimal_tick_width	100										Optimal distance (in pixels) between ticks on axis.
+base_class			"tl-timeline"							Removing the tl-timeline base class will disable all default stylesheets.
+timenav_height						150						The height in pixels of the timeline nav. Takes precedence over timenav_height_percentage.
+timenav_height_percentage			25						Specify the timeline nav height as a percentage of the screen instead of in pixels.
+timenav_mobile_height_percentage	40						Specify the timeline nav height as a percentage of a mobile device screen.
+timenav_height_min					150						The minimum timeline nav height (in pixels).
+marker_height_min					30						The minimum marker height (in pixels).
+marker_width_min					100						The minimum marker witdh (in pixels).
+marker_padding						5						Top and bottom padding (in pixels) for markers.
+start_at_slide						0						The first slide to display when the timeline is loaded.
+start_at_end						false					If true, loads timeline on last slide.
+menubar_height						0						
+use_bc								false					Use declared suffix on dates earlier than 0.
+duration							1000					Animation duration (in milliseconds).
+ease						TL.Ease.easeInOutQuint			
+dragging							true					
+trackResize							true
+slide_padding_lr					100						Padding (in pixels) on the left and right of each slide.
+slide_default_fade					"0%"					
+language							"en"
+ga_property_id						null					Google Analytics ID.			
+track_events		['back_to_start', 'nav_next', 'nav_previous', 'zoom_in', 'zoom_out']
+script_path							""						Can be used to help Timeline load related resources such as CSS themes and language files. Rarely needs to be set.
+
+
+
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>TIMELINEJS - test1</title>
+    <meta name="description" content="The human computer interface helps to define computing at any one time.">
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,width=device-width">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <!-- Style-->
+    <style>
+      html, body {
+      height: 100%;
+      padding: 0px;
+      margin: 0px;
+      }
+    </style>
+  </head>
+  <body>
+  <div id="timeline-embed">
+    <div id="timeline"></div>
+  </div>
+  <link rel="stylesheet" href="//cdn.knightlab.com/libs/timeline3/latest/css/timeline.css">
+  <script type="text/javascript" src="//cdn.knightlab.com/libs/timeline3/latest/js/timeline-min.js"></script>
+  <script>
+    $(document).ready(function(){
+        var embed = document.getElementById('timeline-embed');
+        embed.style.height = getComputedStyle(document.body).height;
+        
+        
+        // window.timeline = new TL.Timeline('timeline-embed', 'dtimeline.json', { hash_bookmark: false});
+        
+        var obj = {  title: { text: { headline: "Revolutionary User Interfaces",
+        							  text: "<p>The human computer interface helps to define computing at any one time. As computers have become more mainstream the interfaces have become more intimate. This is the journey of computer technology and how it has come to</p>"
+        					} },
+    				events: [{	start_date: { year: "2018", month: "01", day:  "01" },
+                				text: { headline: "test1- long text --", 
+                				text: "test1 - text " }		},
+                				
+                				{	start_date: { year: "2018", month: "02", day:  "02" },
+                				text: { headline: "test2", text: "test2 - text " }		},    
+                				
+                				{	start_date: { year: "2018", month: "03", day:  "03" },
+                				text: { headline: "test3", text: "test3 - text " }		}
+            
+    						]}
+    	sHtmlValue = '<p style="text-align: justify; background: white; font-size: 10pt; font-family: Calibri, sans-serif;"><strong><span style="font-size: 10.5pt; font-family: sans-serif; color: black;">Lorem ipsum dolor sit amet</span></strong>' +
+				'<span style="font-size: 10.5pt; font-family: sans-serif; color: black;">, consectetur adipiscing elit. Suspendisse ornare, nibh nec gravida tincidunt, ipsum quam venenatis nisl, vitae venenatis urna sem eget ipsum. Ut cursus auctor leo et vulputate. ' +
+				'Curabitur nec pretium odio, sed auctor felis. In vehicula, eros aliquam pharetra mattis, ante mi fermentum massa, nec pharetra arcu massa finibus augue. </span></p> ' +
+				'<p style="margin: 0in 0in 11.25pt; text-align: justify; background: white; font-size: 10pt; font-family: Calibri, sans-serif;"><img style="float: left; padding-right: 1em;" src="http://monliban.org/images/1473838236_274706_l_srgb_s_gl_465881_large.jpg" width="304" height="181" />' +
+				'<span style="font-size: 10.5pt; font-family: sans-serif; color: #0070c0;">Phasellus imperdiet metus est, in luctus erat fringilla ut. In commodo magna justo, sit amet ultrices ipsum egestas quis.</span><span style="font-size: 10.5pt; font-family: sans-serif; color: black;"> ' +
+				'Nullam ac mauris felis. Sed tempor odio diam, nec ullamcorper lacus laoreet vitae. <strong>Aenean quam libero</strong>, varius eu ex eu, aliquet fermentum orci. Donec eget ante sed enim pretium tempus. <strong><em>Aliquam semper neque eu aliquam dictum</em></strong>. ' +
+				'Nulla in convallis diam. Fusce molestie risus nec posuere ullamcorper. Fusce ut sodales tortor. <u>Morbi eget odio a augue viverra semper.</u></span></p>' +
+				'<p style="font-size: 10pt; font-family: Calibri, sans-serif;"><span style="font-family: sans-serif; color: #353535;">Fusce dapibus sodales ornare. ' +
+				'Nullam ac mauris felis. Sed tempor odio diam, nec ullamcorper lacus laoreet vitae. Aenean quam libero, varius eu ex eu, aliquet fermentum orci. Donec eget ante sed enim pretium tempus. Nullam laoreet metus ac enim placerat, nec tempor arcu finibus. ' +
+				'Curabitur nec pretium odio, sed auctor felis. Nam eu neque faucibus, pharetra purus id, congue elit. Phasellus neque lectus, gravida at cursus at, pretium eu lorem. </span></p>' +
+				'<ul>' +
+				'<li style="font-size: 10pt; font-family: Calibri, sans-serif;"><span style="font-family: sans-serif; color: #353535;">Nulla non elit hendrerit, auctor arcu sit amet, tempor nisl.</span></li>' +
+				'<li style="font-size: 10pt; font-family: Calibri, sans-serif;"><span style="font-family: sans-serif; color: #353535;">Morbi sed libero pulvinar, maximus orci et, hendrerit orci.</span></li>' +
+				'<li style="font-size: 10pt; font-family: Calibri, sans-serif;"><span style="font-family: sans-serif; color: #353535;">Phasellus sodales enim nec sapien commodo mattis.</span></li>' +
+				'<li style="font-size: 10pt; font-family: Calibri, sans-serif;"><span style="font-family: sans-serif; color: #353535;">Integer laoreet eros placerat pharetra euismod.</span></li>' +
+				'</ul>' +
+				'<p style="font-size: 10pt; font-family: Calibri, sans-serif;"><span style="font-family: sans-serif; color: #c00000;">Ut vitae commodo ante. Morbi nibh dolor, ullamcorper sed interdum id, molestie vel libero. ' +
+				'Proin volutpat dui eget ipsum scelerisque, a ullamcorper ipsum mattis. Cras sed elit sit amet diam convallis vehicula vitae ut nisl. Ut ornare dui ligula, id euismod lectus eleifend at. Nulla facilisi. In pharetra lectus et augue consequat vestibulum.</span></p>' +
+				'<ol>' +
+				'<li style="font-size: 10pt; font-family: Calibri, sans-serif;"><span style="font-family: sans-serif; color: #353535;">Proin id eros vel libero maximus dignissim ac et velit.</span></li>' +
+				'<li style="font-size: 10pt; font-family: Calibri, sans-serif;"><span style="font-family: sans-serif; color: #353535;">In non odio pharetra, dapibus augue quis, laoreet felis.</span></li>' +
+				'</ol>' +
+				'<p style="font-size: 10pt; font-family: Calibri, sans-serif;"><span style="font-family: sans-serif; color: #353535;">Donec a consectetur libero. Donec ut massa justo. Duis euismod varius odio in rhoncus. Nullam sagittis enim vel massa tempor, ' +
+				'ut malesuada libero mollis. Vivamus dictum diam diam, quis rhoncus ex congue vel.</span></p>' +
+				'<p style="text-align: center; font-size: 10pt; font-family: Calibri, sans-serif;" align="center"><em><span style="font-family: sans-serif; color: #a6a6a6;">"Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."</span></em></p>' +
+				'<p style="text-align: right; font-size: 10pt; font-family: Calibri, sans-serif;" align="right"><span style="font-family: sans-serif; color: #353535;">-</span> <strong><span style="font-family: sans-serif; color: #353535;">Sed in lacus dolor.</span></strong></p>';					
+    	
+    	
+    	
+    	/// *********************************************************************
+    	/// *********************************************************************
+    	/// *********************************************************************
+        var obj2 = {	title: { text: { headline: "Revolutionary User Interfaces",
+        							  text: "<p>The human computer interface helps to define computing at any one time. As computers have become more mainstream the interfaces have become more intimate. This is the journey of computer technology and how it has come to</p>"
+        					} },
+    				
+    					eras: {
+    									start_date: { year: "2018", month: "01", day:  "01" },
+	                					end_date: { year: "2019", month: "04", day:  "04" },
+	                					text: { headline: "<h1>eras</h1><p>test</p>", text: "test2 - text " }	
+    					},
+    					scale : "human", //  "cosmological" dates  Before Tuesday, April 20th,271,821 BCE after Saturday, September 13 275,760 CE)
+    					
+	    				events: [	//1
+	    							{	start_date: { year: "2018", month: "01", day:  "01" },
+	                					text: { headline: "test1-- long text Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat", 
+	                					
+	                					text: "<b>test1 - text</b> <br/>" + sHtmlValue } ,
+	                					
+	                					group: "test2", 		},
+	                				
+	                				//2
+	                				
+	                				{	start_date: { year: "2018", month: "02", day:  "02" },
+	                					end_date: { year: "2018", month: "04", day:  "04" },
+	                					text: { headline: "test2", text: "test2 - text " }	,	
+	                					media: {	 Name: "media",   url: "url", caption:	"caption", credit:"david", 
+	                								thumbnail: "th",  alt: "tag", title: "title media", link: "link", link_target: "link target" } , 
+	                					group: "test", 
+										display_date : "date disp: 2018...",
+										background	 : {url:"url", color:"blue"},
+										autolink	: "autolink",
+										unique_id	: "12930"
+	                					
+	                				},    
+	                				//3
+	                				{	start_date: { year: "2018", month: "03", day:  "03" },
+	                					text: { headline: "test3", text: "test3 - text " }	, 
+	                					group: "test3"
+									}
+	            
+	    						]}					
+        
+           var additionalOptions = {
+              height: "200px", 
+              start_at_end: true,
+              default_bg_color: {r:255, g:230, b:240},
+              timenav_height: 250, 
+              hash_bookmark: false, 
+              initial_zoom: 5, 
+              timenav_position:	"top"	
+			//timenav_height		150	
+            }
+
+        
+        window.timeline = new TL.Timeline('timeline-embed', obj2 , additionalOptions );
+     
+     
+      });
+  </script>
+  </body>
+</html>
