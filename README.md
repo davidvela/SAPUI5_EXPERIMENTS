@@ -4,9 +4,9 @@ testing:
 	
 	1. tiles - tooltips 
 	2. timelines  -- 
-		a. https://sapui5.hana.ondemand.com/#/sample/sap.suite.ui.commons.sample.Timeline/preview   
-		b. https://timeline.knightlab.com/
-		c. https://timeline.knightlab.com/docs/index.html
+		a. [https://sapui5.hana.ondemand.com/#/sample/sap.suite.ui.commons.sample.Timeline/preview](https://sapui5.hana.ondemand.com/#/sample/sap.suite.ui.commons.sample.Timeline/preview)   
+		b. [https://timeline.knightlab.com/](https://timeline.knightlab.com/)
+		c. [https://timeline.knightlab.com/docs/index.html](https://timeline.knightlab.com/docs/index.html)
 	3. 
 	
 
