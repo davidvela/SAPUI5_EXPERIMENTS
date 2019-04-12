@@ -113,6 +113,24 @@ script_path							""						Can be used to help Timeline load related resources su
       padding: 0px;
       margin: 0px;
       }
+      .tl-timenav .tl-attribution { 
+		cursor: pointer;
+	    z-index: 9;
+	    position: absolute;
+	    bottom: 2px;
+	    left: 0;
+	    /*font-size: 20px;*/
+	    font-size: 0px;
+	    line-height: 10px;
+	    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif!important;
+	    /*background-color: rgba(238, 10, 10, 0.85);*/
+	    padding: 3px;
+	    display: none;  
+	    /*display:  block; */
+		
+	}
+      
+      
     </style>
   </head>
   <body>
@@ -120,7 +138,7 @@ script_path							""						Can be used to help Timeline load related resources su
     <div id="timeline"></div>
   </div>
   <link rel="stylesheet" href="//cdn.knightlab.com/libs/timeline3/latest/css/timeline.css">
-  <script type="text/javascript" src="//cdn.knightlab.com/libs/timeline3/latest/js/timeline-min.js"></script>
+  <script type="text/javascript" src="//cdn.knightlab.com/libs/timeline3/latest/js/timeline-min.js"></script> 
   <script>
     $(document).ready(function(){
         var embed = document.getElementById('timeline-embed');

@@ -1,0 +1,32 @@
+{
+    "title": {
+        "text": {
+          "headline": "Revolutionary User Interfaces",
+          "text": "<p>The human computer interface helps to define computing at any one time. As computers have become more mainstream the interfaces have become more intimate. This is the journey of computer technology and how it has come to</p>"
+        }
+    },
+    "events": [
+            {
+                "start_date": {
+                    "year":     "2018",
+                    "month":    "01",
+                    "day":      "01"
+                },
+                "text": {
+                    "headline": "test1",
+                    "text": "test1 - text "
+                }
+            },      
+            {
+                "start_date": {
+                    "year":     "2018",
+                    "month":    "02",
+                    "day":      "02"
+                },
+                "text": {
+                    "headline": "test2",
+                    "text": "test2 - text "
+                }
+            }
+    ]
+}
