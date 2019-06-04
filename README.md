@@ -26,9 +26,9 @@ testing:
 ![pic2](https://github.com/davidvela/SAPUI5_EXPERIMENTS/blob/master/assets/test2.PNG)
 
 # coding: 
- ```  sap.ui.core.BusyIndicator.show();   ```
- ```  sap.ui.core.BusyIndicator.hide();   ```
- ``` wrong: 		var host = window.origin; ```
- ``` if (!window.location.origin) {```
-```  window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');} ```
-```  var host =  window.location.origin; ```
+ ```  sap.ui.core.BusyIndicator.show();   ``` <br/>
+ ```  sap.ui.core.BusyIndicator.hide();   ```<br/><br/>
+ ``` wrong: 		var host = window.origin; ```<br/>
+ ``` if (!window.location.origin) {```<br/>
+```  window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');} ```<br/>
+```  var host =  window.location.origin; ```<br/>
