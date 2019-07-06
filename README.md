@@ -32,3 +32,12 @@ testing:
  ``` if (!window.location.origin) {```<br/>
 ```  window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');} ```<br/>
 ```  var host =  window.location.origin; ```<br/>
+
+# DATEPICKER FORMATTING!
+<DatePicker name="validTo" id="validTo_id"  placeholder="Enter End Date ..."  enabled="true" visible="true" 
+	valueFormat="yyyy-MM-dd"  displayFormat="short" change= "_validateSaveEnablement" value="xxx"/>
+<!--{path:'DateO
+<!--{path:'DateOfBirth',type:'sap.ui.model.odata.type.DateTime', 
+	constraints:{displayFormat:'Date'}, formatOptions:{pattern: 'MM-dd-yyyy'}}-->
+
+
