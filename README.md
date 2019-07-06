@@ -34,10 +34,10 @@ testing:
 ```  var host =  window.location.origin; ```<br/>
 
 # DATEPICKER FORMATTING!
-<DatePicker name="validTo" id="validTo_id"  placeholder="Enter End Date ..."  enabled="true" visible="true" 
-	valueFormat="yyyy-MM-dd"  displayFormat="short" change= "_validateSaveEnablement" value="xxx"/>
-<!--{path:'DateO
-<!--{path:'DateOfBirth',type:'sap.ui.model.odata.type.DateTime', 
-	constraints:{displayFormat:'Date'}, formatOptions:{pattern: 'MM-dd-yyyy'}}-->
+|<DatePicker name="validTo" id="validTo_id"  placeholder="Enter End Date ..."  enabled="true" visible="true" 
+|	valueFormat="yyyy-MM-dd"  displayFormat="short" change= "_validateSaveEnablement" value="xxx"/>
+
+{path:'DateOfBirth',type:'sap.ui.model.odata.type.DateTime', 
+	constraints:{displayFormat:'Date'}, formatOptins:{pattern: 'MM-dd-yyyy'}}
 
 
