@@ -1,11 +1,9 @@
-sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/model/json/JSONModel", "sap/suite/ui/commons/util/DateUtils", "sap/m/MessageToast"],
-	function (Controller, JSONModel, DateUtils, MessageToast) {
+sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/model/json/JSONModel", "sap/suite/ui/commons/util/DateUtils", "sap/m/MessageToast", 	"sap/ui/Device" ],
+	function (Controller, JSONModel, DateUtils, MessageToast, Device) {
 		"use strict";
-
 		function getBasePath() {
 			return jQuery.sap.getModulePath("sap.suite.ui.commons.sample.Timeline", "");
 		}
-
 		function convertData(oEvent) {
 			var oData,
 				oModel = oEvent.getSource(),
@@ -22,7 +20,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/model/json/JSONModel", "sap
 			});
 			oModel.updateBindings(true);
 		}
-
 		return Controller.extend("testing.exp.controller.View1", {
 			onInit: function () {
 				// https://sapui5.hana.ondemand.com/#/sample/sap.suite.ui.commons.sample.Timeline/preview
@@ -37,13 +34,22 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/model/json/JSONModel", "sap
 					// sctretch:true on container prevents scrolling by default
 					jQuery("section").css("overflow", "auto");
 				});
+				//this.getRouter().initialize();
+
+				var oTile = this.getView().byId("genericTileID");
+				
 			},
 
 			// Hello world 
 			onShowHello: function () {
 				MessageToast.show("Hello World");
 			},
-
+			onGoToView2: function () {
+				MessageToast.show("Go to view2 ");			var bReplace = !Device.system.phone;
+			this.getOwnerComponent().getRouter().navTo("View2", { }, bReplace);
+				
+				
+			},
 			// timeline fucntions: 
 			enableScrollSelected: function (oEvent) {
 				var bSelected = oEvent.getParameter("selected");

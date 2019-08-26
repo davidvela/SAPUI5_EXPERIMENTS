@@ -25,12 +25,21 @@
 								<CheckBox select="enableScrollSelected" text="enable scrollbar" selected="true"/>
 							</content>
 						</OverflowToolbar>
-						<GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="US Profit Margin" press="press" tooltip="tile">
+						
+						<GenericTile id = "genericTileID" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="US Profit Margin" press="press" 
+						tooltip="test David\nnew line ">
+						<!--tooltip="<h1>tile</h1> <h3>custom</h3>test"-->
 							<TileContent unit="Unit">
 								<NumericContent scale="%" value="12" valueColor="Critical" indicator="Up" tooltip="numeric cont"/>
 							</TileContent>
+							 <tooltip>
+					            <!--  <RichTooltip text="test">-->
+					            <!--</RichTooltip>-->
+					          </tooltip>
 						</GenericTile>
+						
 						<Button id="helloButton" type="Emphasized" icon="sap-icon://sap-ui5" text="Say Hello" press="onShowHello" class="sapUiSmallMargin"/>
+						<Button id="onView2" type="Emphasized" icon="sap-icon://sap-ui5" text="onGoToView2" press="onGoToView2" class="sapUiSmallMargin"/>
 						<commons:Timeline id="idTimeline" enableDoubleSided="true" groupBy="HireDate" growingThreshold="0" filterTitle="Job Title"
 							sortOldestFirst="true" content="{/Employees}">
 							<commons:content>
