@@ -1,5 +1,5 @@
 <mvc:View controllerName="testing.exp.controller.View1" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:commons="sap.suite.ui.commons"  xmlns:core="sap.ui.core" >
-	<Shell id="shell">
+	<Shell id="shell" >
 		<App id="app">
 			<pages>
 				<Page id="page" title="test1234">

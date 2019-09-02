@@ -8,7 +8,8 @@ sap.ui.define([
 	return UIComponent.extend("testing.exp.Component", {
 
 		metadata: {
-			manifest: "json"
+			manifest: "json", 
+			config : { fullWidth : true, serviceConfig : {} }
 		},
 
 		/**

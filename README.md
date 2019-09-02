@@ -14,8 +14,14 @@ testing:
 		a. NO: ``` ```
 		a. YES: ``` if (!window.location.origin) {```
 			  ```window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');} ```
+	5. full width 
+		a. component.js ```metadata:{ config : { fullWidth : true, serviceConfig : {} },```
+		b. manifest: ```   routing: {config: { fullWidth : true, routerClass: A.MyRouter, viewType: "XML", ...  ````
+		c. manifest: ``` "sap.ui": { "fullWidth": true ...} ```
+		d. index.html  ```appWidthLimited: false``` 
+				```sap.ui.require([  "sap/m/Shell",   "sap/ui/core/ComponentContainer", ], (Shell, ComponentContainer) => new Shell({  appWidthLimited: false|true, // <--// ...}).placeAt("content"));```
+		e <script>sap.ui.getCore().attachInit(function() {new sap.m.Shell({app: new sap.ui.core.ComponentContainer({height : "100%",name : "ch.schindler.customerstats"}),appWidthLimited: false}).placeAt("content");});</script>
 
-	
 [I'm an inline-style link](https://www.google.com)<br/>
 <br/>[https://sapui5.hana.ondemand.com/#/sample/sap.suite.ui.commons.sample.Timeline/preview](https://sapui5.hana.ondemand.com/#/sample/sap.suite.ui.commons.sample.Timeline/preview)   
 <br/>[https://timeline.knightlab.com/](https://timeline.knightlab.com/)
