@@ -22,6 +22,15 @@ testing:
 				```sap.ui.require([  "sap/m/Shell",   "sap/ui/core/ComponentContainer", ], (Shell, ComponentContainer) => new Shell({  appWidthLimited: false|true, // <--// ...}).placeAt("content"));```
 		e <script>sap.ui.getCore().attachInit(function() {new sap.m.Shell({app: new sap.ui.core.ComponentContainer({height : "100%",name : "ch.schindler.customerstats"}),appWidthLimited: false}).placeAt("content");});</script>
 		4. app.view.xml ``` 	<Shell appWidthLimited="false"> ```
+	6. TWO WAY BINDING 
+		a. manifest: "models": {"": {"dataSource": "mainService", "preload": true,
+			"settings": {
+					"defaultBindingMode": "TwoWay"
+				}
+			}
+		b. model.js 			oModel.setDefaultBindingMode("TwoWay");
+		c. index.html       data-sap-ui-xx-bindingSyntax="complex"
+
 		
 [I'm an inline-style link](https://www.google.com)<br/>
 <br/>[https://sapui5.hana.ondemand.com/#/sample/sap.suite.ui.commons.sample.Timeline/preview](https://sapui5.hana.ondemand.com/#/sample/sap.suite.ui.commons.sample.Timeline/preview)   
