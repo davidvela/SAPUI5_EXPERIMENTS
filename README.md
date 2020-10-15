@@ -1,7 +1,6 @@
 # SAPUI5 - EXPERIMENTS		
-test<br/>
-testing: 
-	
+<br/>
+testing <br/>
 	1. tiles - tooltips 
 	2. timelines  -- 
 		a. l_ [https://sapui5.hana.ondemand.com/#/sample/sap.suite.ui.commons.sample.Timeline/preview](https://sapui5.hana.ondemand.com/#/sample/sap.suite.ui.commons.sample.Timeline/preview)   
